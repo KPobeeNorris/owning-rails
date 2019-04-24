@@ -1,4 +1,5 @@
 require "active_record/connection_adapter"
+require 'byebug'
 
 module ActiveRecord
   class Base
@@ -20,6 +21,12 @@ module ActiveRecord
    def self.find(id)
      attributes = connection.execute("SELECT * FROM posts WHERE id = #{id.to_i}").first
      new(attributes)
+   end
+
+   def self.all
+     posts = connection.execute("SELECT * FROM posts")
+     
+     posts.map{|post|  new(post)}
    end
 
    def self.establish_connection(options)

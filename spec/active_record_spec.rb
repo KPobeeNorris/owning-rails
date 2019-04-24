@@ -23,6 +23,13 @@ RSpec.describe ActiveRecord do
     expect(post.title).to eq "Blueberry muffins"
   end
 
+  it 'returns all posts' do
+    post = Post.all.first
+    expect(post).to be_a_kind_of(Post)
+    expect(post.id).to eq 1
+    expect(post.title).to eq "Blueberry muffins"
+  end
+
   it 'can execute sql' do
     rows = Post.connection.execute("SELECT * FROM posts")
     expect(rows).to be_a_kind_of(Array)
