@@ -30,7 +30,7 @@ RSpec.describe ActiveRecord do
     expect(post.title).to eq "Blueberry muffins"
   end
 
-  it 'can execute sql' do
+  it 'can execute sql query' do
     rows = Post.connection.execute("SELECT * FROM posts")
     expect(rows).to be_a_kind_of(Array)
     row = rows.first
