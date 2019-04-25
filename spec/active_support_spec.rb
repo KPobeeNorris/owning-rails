@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'active_support'
+require 'active_record'
+require 'action_controller'
 
 RSpec.describe ActiveSupport do
   before do
@@ -17,6 +19,7 @@ RSpec.describe ActiveSupport do
   end
 
   it 'corrects the case of the name' do
-    
+    expect(Post.to_s.underscore).to eq "post"
+    expect(ApplicationController.to_s.dup.underscore).to eq "application_controller"
   end
 end

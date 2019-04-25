@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'active_support'
 require 'active_record'
 
 RSpec.describe ActiveRecord do
