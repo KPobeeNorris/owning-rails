@@ -27,7 +27,7 @@ RSpec.describe ActionDispatch do
   end
 
   it 'draws from the routes file' do
-    routes = ActionDispatch::Routing::RouteSet.new
+    routes = Rails.application.routes
     routes.draw do
       get "/hello", to: "hello#index"
       root to: "posts#index"
@@ -45,5 +45,35 @@ RSpec.describe ActionDispatch do
     expect(route.action).to eq "new"
     expect(route.method).to eq "GET"
     expect(route.name).to eq "new_post"
+  end
+
+  it 'calls the app' do
+    routes = ActionDispatch::Routing::RouteSet.new
+    routes.draw do
+      root to: "posts#index"
+      resources :posts
+    end
+
+    request = Rack::MockRequest.new(routes)
+    request.get("/").ok?
+    request.get("posts").ok?
+    request.get("/posts/new").ok?
+    request.get("posts/show?id=1").ok?
+    request.post("/").not_found?
+  end
+
+  it 'checks the middleware stack' do
+    app = Rails.application
+
+    request = Rack::MockRequest.new(app)
+
+    request.get("/").ok?
+    request.get("posts").ok?
+    request.get("/posts/new").ok?
+    request.get("posts/show?id=1").ok?
+    request.post("/").not_found?
+    request.get("/favicon.ico").ok?
+    request.get("assets/application.js").ok?
+    request.get("assets/application.css").ok?
   end
 end

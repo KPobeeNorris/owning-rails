@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "rack"
+  spec.add_dependency "sprockets"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
@@ -44,4 +45,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "rerun"
   spec.add_development_dependency "thin"
+  spec.add_development_dependency "sass"
+  spec.add_development_dependency "coffee-script"
 end

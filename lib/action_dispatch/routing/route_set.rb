@@ -4,6 +4,18 @@ module ActionDispatch
       def match?(request)
         request.request_method == method && request.path_info == path
       end
+
+      def controller_class
+        "#{controller.classify}Controller".constantize
+      end
+
+      def dispatch(request)
+        controller = controller_class.new
+        controller.request = request
+        controller.response = Rack::Response.new
+        controller.process(action)
+        controller.response
+      end
     end
 
     class RouteSet
@@ -24,6 +36,16 @@ module ActionDispatch
       def draw(&block)
         mapper = Mapper.new(self)
         mapper.instance_eval(&block)
+      end
+
+      def call(env)
+        request = Rack::Request.new(env)
+
+        if route = find_route(request)
+          route.dispatch(request)
+        else
+          [404, { 'Content-Type' => 'text/plain' }, ['Not found']]
+        end
       end
     end
   end
