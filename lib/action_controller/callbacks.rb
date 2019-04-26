@@ -31,6 +31,14 @@ module ActionController
       def before_actions
         @before_action ||= []
       end
+
+      def after_action(method, options={})
+        after_actions << Callback.new(method, options)
+      end
+
+      def after_actions
+        @after_action ||= []
+      end
     end
 
     def process(action)
@@ -39,7 +47,14 @@ module ActionController
           callback.call(self)
         end
       end
+
       super
+
+      self.class.after_actions.each do |callback|
+        if callback.match?(action)
+          callback.call(self)
+        end
+      end
     end
   end
 end
