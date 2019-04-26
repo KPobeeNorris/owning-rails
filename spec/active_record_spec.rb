@@ -1,14 +1,6 @@
 require 'spec_helper'
-require 'active_support'
-require 'active_record'
 
 RSpec.describe ActiveRecord do
-
-  before do
-    Post.establish_connection(
-      database: "#{__dir__}/muffin_blog/db/development.sqlite3")
-  end
-
   it 'initialises a new post' do
     post = Post.new(id: 1, title: "My first post")
     expect(post.id).to eq 1
