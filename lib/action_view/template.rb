@@ -28,6 +28,7 @@ module ActionView
     def compile
       return if @compiled
       code = ERB.new(@source).src
+
       CompiledTemplates.module_eval <<-CODE
         def #{method_name}
           #{code}

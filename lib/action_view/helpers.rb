@@ -1,7 +1,7 @@
 module ActionView
   module Helpers
     def stylesheet_link_tag(name, options={})
-      %Q{<link href="/assets/#{name}.css" media="all", rel="stylesheet" />}
+      %Q{<link href="/assets/#{name}.css" media="all" rel="stylesheet" />}
     end
 
     def javascript_include_tag(name, options={})
@@ -9,6 +9,10 @@ module ActionView
     end
 
     def csrf_meta_tags
+      # Not implemented
+    end
+
+    def csp_meta_tag
       # Not implemented
     end
 

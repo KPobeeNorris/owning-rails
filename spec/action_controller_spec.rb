@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 RSpec.describe ActionController do
   class TestController < ActionController::Base
     before_action :callback, only: [:show]
@@ -29,15 +28,16 @@ RSpec.describe ActionController do
   end
 
 
-  subject { TestController.new }
 
   it 'can get a response when calling index' do
-    subject.response = []
-    subject.process :index
-    expect(subject.response).to eq ["index"]
+    thing = TestController.new
+    thing.response = []
+    thing.process :index
+    expect(thing.response).to eq ["index"]
   end
 
   it 'returns the callback when calling show' do
+    subject = TestController.new
     subject.response = []
     subject.process :show
     expect(subject.response).to eq ["callback", "show", "callback_after"]
@@ -54,13 +54,15 @@ RSpec.describe ActionController do
     controller = PostsController.new
     controller.request = Request.new
     controller.process :show
+
+    expect(controller.instance_variable_get(:@post)).to eq "something"
   end
 
   class Response
     attr_accessor :status, :location, :body
   end
 
-  it 'can redirect to a specific page' do
+  xit 'can redirect to a specific page' do
     controller = TestController.new
     controller.response = Response.new
     controller.process :redirect
