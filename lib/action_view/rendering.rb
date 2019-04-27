@@ -2,11 +2,15 @@ module ActionView
   module Rendering
     def render(action)
       context = Base.new(view_assigns)
+      context.extend Rails.application.routes.url_helpers
+
       path = template_path(action)
+
       content = Template.find(path).render(context)
       body = Template.find(layout_path).render(context) do
         content
       end
+
       response.body = [body]
     end
 

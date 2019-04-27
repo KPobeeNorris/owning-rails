@@ -50,10 +50,17 @@ RSpec.describe ActionView do
     expect(controller.view_assigns).to eq ( { "var" => "var value"} )
   end
 
-  it 'tests the rendering of a view' do
+  it 'tests the rendering the show view' do
     request = Rack::MockRequest.new(Rails.application)
     response = request.get("/posts/show?id=1")
-    
+
     expect(response.body).to include("<h1>Blueberry muffins</h1>")
+  end
+
+  it 'tests the rendering the index view' do
+    request = Rack::MockRequest.new(Rails.application)
+    response = request.get("/posts")
+
+    expect(response.body).to include("<h1>Muffin Blog<h1>")
   end
 end
