@@ -11,14 +11,14 @@ module ActionCable
       @pubsub = SubscriptionAdapter::Inline.new
     end
 
-    def broadcast(name, data)
-      @pubsub.broadcast(name, data)
-    end
-
     def call(env)
       connection = ApplicationCable::Connection.new(self, env)
       @connections << connection
       connection.process
+    end
+
+    def broadcast(name, data)
+      @pubsub.broadcast(name, data)
     end
   end
 end
