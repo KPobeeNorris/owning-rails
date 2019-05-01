@@ -47,4 +47,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "thin"
   spec.add_development_dependency "sass"
   spec.add_development_dependency "coffee-script"
+  spec.add_development_dependency "faye-websocket"
 end
